@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="w-full mt-20 p-8 space-y-6 bg-white rounded-lg shadow-lg">
-  <p class="text-xl font-bold text-gray-800 text-start">Place a New Order</p>
-  
+  <p class="text-xl font-bold text-gray-800 text-start">Create a New Order</p>
+
   @if(session('success'))
     <div class="flex justify-between items-center p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
         <span>{{ session('success') }}</span>
