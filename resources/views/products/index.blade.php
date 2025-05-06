@@ -35,12 +35,12 @@
                     <td class="px-6 py-4">{{ number_format($product->price, 2) }}</td>
                     <td class="px-6 py-4">{{ $product->description }}</td>
                     <td class="px-6 py-4">
-                        @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" class="h-12 w-12 object-cover rounded">
-                        @else
-                            <span class="text-gray-400">N/A</span>
-                        @endif
-                    </td>
+    @if($product->image)
+        <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" class="h-12 w-12 object-cover rounded">
+    @else
+        <span class="text-gray-400">N/A</span>
+    @endif
+</td>
                     <td class="px-6 py-4 flex items-center space-x-2">
     <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs font-medium">Edit</a>
 

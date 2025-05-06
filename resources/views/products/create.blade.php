@@ -3,8 +3,8 @@
 @section('content')
 
 
-  <div class="w-full  mt-20  p-8 space-y-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-2xl font-bold text-center text-gray-800 text-start">Add a New Product</h2>
+  <div class="w-full  mt-20  p-8  bg-white rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold  text-gray-800 text-start">Add a New Product</h2>
 
 
     @if(session('success'))

@@ -2,6 +2,9 @@
     
     <div class="flex items-center justify-center ">
         <div class="w-full max-w-md p-8 space-y-6 bg-white rounded ">
+        <div class="text-center">
+        <img src="assets/images/asp.png" alt="Laravel Logo" class="h-20  w-auto " style="font-size:20px;">
+        </div>
             <h2 class="text-2xl font-bold text-center text-gray-700">Login to your Account</h2>
 
             <form method="POST" action="{{ route('login') }}" class="space-y-5">
