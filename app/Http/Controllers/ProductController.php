@@ -47,7 +47,7 @@ public function store(Request $request)
     ]);
 
     // Redirect with success message
-    return redirect()->back()->with('success', 'Product added successfully!');
+    return redirect()->route('products')->with('success', 'Product added successfully!');
 }
 
 
