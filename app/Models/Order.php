@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+
+ 
+
+
     protected $fillable = [
         'pid',           // Product ID
         'price',
@@ -21,4 +26,11 @@ class Order extends Model
         return $this->belongsTo(Product::class, 'pid');
         // 'pid' is the foreign key in the orders table
     }
+
+   public function user()
+{
+    return $this->belongsTo(\App\Models\User::class, 'userid');
+}
+
+
 }

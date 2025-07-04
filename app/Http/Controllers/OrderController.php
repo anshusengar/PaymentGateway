@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\User;
+use App\Mail\PaymentSuccessMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Jobs\SendOrderSuccessEmail;
 
 class OrderController extends Controller
 {
@@ -34,6 +38,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->price =  $totalPrice; // Automatically set product price
         $order->description = $request->description??'';
+        $order->status = $request->status??'';
         $order->paymentmethod = $request->payment_method;
         $order->pid = $product->id; // Save the selected product ID
         $order->qty = $request->quantity;
@@ -42,7 +47,8 @@ class OrderController extends Controller
     
         // Save the order
         $order->save();
-    
+     event(new \App\Events\OrderStatusUpdated($order));
+
         return redirect()->route('orders')->with('success', 'Order created successfully!');
     }
     
@@ -56,5 +62,45 @@ class OrderController extends Controller
            return redirect()->back()->with('success', 'Order Deleted successfully.');
     }
     
+public function sendMail(Request $request)
+{
+    $order = Order::with('user')->find($request->order_id);
+
+    if (!$order) {
+        return response()->json(['success' => false, 'message' => 'Order not found']);
+    }
+
+    SendOrderSuccessEmail::dispatch($order);
+
+    return response()->json(['success' => true, 'message' => 'Email sent successfully!']);
+}
+
+
+
+public function placeOrder(Request $request)
+{
+   $order = Order::create([
+    'user_id' => auth()->id(),
+    'amount' => $request->amount,
+    'status' => 'pending',
+]);
+    // Dispatch the job to the queue
+    SendOrderSuccessEmail::dispatch($order);
+
+    return response()->json(['success' => true]);
+}
+
+
+public function updateStatus(Request $request, $id)
+{
+    $order = Order::findOrFail($id);
+    $order->status = $request->input('status');
+    $order->save();
+
+    // optionally fire the event here:
+    event(new \App\Events\OrderStatusUpdated($order));
+
+    return redirect()->back()->with('success', 'Order status updated!');
+}
 
 }

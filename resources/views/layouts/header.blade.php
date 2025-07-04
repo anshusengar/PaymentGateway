@@ -76,10 +76,18 @@
 
             <!-- Dropdown Menu -->
             <div id="userDropdown" class="absolute right-0 hidden mt-2 bg-white shadow-lg rounded-md w-48 py-2 z-50">
-                <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">Profile</a>
-                <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">Settings</a>
-                <a href="{{ route('logout') }}" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">Logout</a>
-            </div>
+    <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">Profile</a>
+    <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">Settings</a>
+
+    <!-- Logout Form -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <a href="javascript:void(0)" onclick="this.closest('form').submit()" class="block px-4 py-1 text-gray-700 hover:bg-gray-200">
+            Logout
+        </a>
+    </form>
+</div>
+
         </div>
 
     </div>
