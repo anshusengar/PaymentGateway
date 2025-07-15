@@ -11,42 +11,52 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     // Register user
-    public function register(Request $request)
-    {
-       $request->validate([
-    'email' => 'required|email',
-    'password' => 'required'
-]);
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+  public function register(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|min:6'
+    ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+        'role' => 'user'  // force user role
+    ]);
 
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
-    }
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return response()->json([
+        'access_token' => $token,
+        'token_type' => 'Bearer',
+        'user' => $user,
+    ]);
+}
 
     // Login user
-    public function login(Request $request)
-    {
-        $user = User::where('email', $request->email)->first();
+   public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
+    $user = User::where('email', $request->email)->first();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
+
+    $token = $user->createToken('auth_token')->plainTextToken;
+
+    return response()->json([
+        'access_token' => $token,
+        'token_type' => 'Bearer',
+        'user' => $user,  // include user details
+    ]);
+}
 
     // Get current authenticated user
     public function user(Request $request)
@@ -61,4 +71,9 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Logged out']);
     }
+
+
+
+
+
 }

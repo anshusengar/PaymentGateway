@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id', // ✅ Add this line
+        'role'
     ];
 
     /**
@@ -47,4 +48,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function coupons()
+{
+    return $this->belongsToMany(Coupon::class)->withPivot('times_used')->withTimestamps();
+}
 }

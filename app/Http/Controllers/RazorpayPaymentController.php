@@ -17,7 +17,7 @@ class RazorpayPaymentController extends Controller
 
     $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
-    $amount = $product->price * 100; // in paise
+   $amount = $order->price * 100;// in paise
 
     $razorpayOrder = $api->order->create([
         'receipt'         => 'order_rcptid_' . $order->id,

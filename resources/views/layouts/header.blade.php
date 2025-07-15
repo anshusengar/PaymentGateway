@@ -11,64 +11,29 @@
 
 
 
-            <div class="hidden md:flex items-center space-x-10">
-
-                <!-- Clients Dropdown -->
-                <div class="ml-20 relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="flex items-center gap-1 focus:outline-none">
-                        <span class="text-md text-[#6c757d] font-sans">Clients</span>
-                        <svg class="w-4 h-4 text-[#b66dff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-
-                    <div x-show="open" @click.away="open = false" class="absolute mt-2 w-40 bg-white shadow-lg rounded-md z-50">
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">View/Search Clients</a>
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Manage Users</a>
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Add New Client</a>
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Product/Services</a>
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Service Addons</a>
-                        <a href="#" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Domain Registration</a>
-                    </div>
-                </div>
-
-                <!-- Products Dropdown -->
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="flex items-center gap-1 focus:outline-none">
-                        <span class="text-md text-[#6c757d] font-sans">Products</span>
-                        <svg class="w-4 h-4 text-[#b66dff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-
-                    <div x-show="open" @click.away="open = false" class="absolute mt-2 w-52 bg-white shadow-lg rounded-md z-50">
-                        <a href="{{route('products')}}" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">All Products</a>
-                        <a href="{{route('create.product')}}" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Create A Product</a>
-                    </div>
-                </div>
-
-                <!-- Orders Dropdown -->
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="flex items-center gap-1 focus:outline-none">
-                        <span class="text-md text-[#6c757d] font-sans">Orders</span>
-                        <svg class="w-4 h-4 text-[#b66dff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-
-                    <div x-show="open" @click.away="open = false" class="absolute mt-2 w-40 bg-white shadow-lg rounded-md z-50">
-                        <a href="{{route('orders')}}" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">View Orders</a>
-                        <a href="{{route('create.order')}}" class="block px-4 py-1 font-sans text-gray-700 hover:bg-[#b66dff] hover:text-[#fff]">Create order</a>
-                    </div>
-                </div>
-
-                <!-- Additional Dropdowns (Billing, Support, Reports) -->
-                <!-- Repeat the same structure for Billing, Support, and Reports if needed -->
-            </div>
+          
         </div>
+
+        <!-- Middle: Search -->
+<div class="w-full md:w-1/3 lg:w-1/4 px-4">
+    <form action="{{ route('admin.search') }}" method="GET">
+        <div class="relative">
+            <input
+                type="text"
+                name="query"
+                placeholder="Search..."
+                class="w-full py-2 px-4 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+            />
+            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-600">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
 
         <!-- Right Side: User Icon (Clickable) -->
         <div class="mr-8 flex items-center relative">
+            
             <button id="userIcon" class="flex items-center text-gray-700" aria-haspopup="true">
                 <i class="fas fa-user-circle text-gray-700 mr-2 text-2xl"></i>
                 <span>{{ Auth::user()->name }}</span>

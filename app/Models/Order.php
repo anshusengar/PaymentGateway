@@ -11,15 +11,22 @@ class Order extends Model
  
 
 
-    protected $fillable = [
-        'pid',           // Product ID
-        'price',
-        'description',
-        'qty',
-        'paymentmethod',
-        'userid',
-    ];
-
+   protected $fillable = [
+    'pid',
+    'price',
+    'description',
+    'qty',
+    'paymentmethod',
+    'userid',
+    'status',
+    'address',  // street/house
+    'phone',
+    'pincode',
+    'city',
+    'state',
+    'size',
+    'coupon_code',
+];
     // Relationship with Product
     public function product()
     {

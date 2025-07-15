@@ -42,7 +42,7 @@
     @endif
 </td>
 <td class="px-6 py-4 flex items-center space-x-2">
-    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs font-medium">Edit</a>
+    <a href="{{ route('product.edit', $product->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-xs font-medium">Edit</a>
 
     <form action="{{ route('product.delete', $product->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
         @csrf
@@ -50,12 +50,7 @@
         <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs font-medium">Delete</button>
     </form>
 
-    <form action="{{ route('cart.add', $product->id) }}" method="POST" class="inline">
-        @csrf
-        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-xs font-medium">
-            Add to Cart
-        </button>
-    </form>
+    
 </td>
 
                 </tr>

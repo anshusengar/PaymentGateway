@@ -43,26 +43,26 @@ class UserController extends Controller
     }
 
     // PUT /api/users/{id}
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+    public function update(Request $request)
+{
+    $user = auth()->user(); // no ID from route
 
-        $validated = $request->validate([
-            'name' => 'sometimes|required',
-            'email' => "sometimes|required|email|unique:users,email,$id",
-            'password' => 'nullable|min:6',
-        ]);
+    $validated = $request->validate([
+        'name' => 'sometimes|required',
+        'email' => "sometimes|required|email|unique:users,email,{$user->id}",
+        'password' => 'nullable|min:6',
+    ]);
 
-        $user->update([
-            'name' => $validated['name'] ?? $user->name,
-            'email' => $validated['email'] ?? $user->email,
-            'password' => isset($validated['password'])
-                ? Hash::make($validated['password'])
-                : $user->password,
-        ]);
+    $user->update([
+        'name' => $validated['name'] ?? $user->name,
+        'email' => $validated['email'] ?? $user->email,
+        'password' => isset($validated['password'])
+            ? Hash::make($validated['password'])
+            : $user->password,
+    ]);
 
-        return new UserResource($user);
-    }
+    return new UserResource($user);
+}
 
     // DELETE /api/users/{id}
     public function destroy($id)
@@ -76,4 +76,9 @@ class UserController extends Controller
 {
     return response()->json($request->user());
 }
+
+
+
+
+
 }

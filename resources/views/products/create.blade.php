@@ -35,17 +35,50 @@
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
       </div>
 
+<div>
+    <label for="category_id" class="block mb-1 text-sm font-medium text-gray-700">Category</label>
+    <select
+        id="category_id"
+        name="category_id"
+        required
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    >
+        <option value="">Select Category</option>
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
+        @endforeach
+    </select>
+</div>
+
+<div>
+<label for="sizes">Sizes (comma separated)</label>
+<input type="text" name="sizes" id="sizes" class="form-input" placeholder="e.g., S,M,L,XL" required>
+</div>
+
+
       <div>
         <label for="description" class="block mb-1 text-sm font-medium text-gray-700">Description</label>
         <textarea id="description" name="description" rows="4" required
           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
       </div>
 
-      <div>
-        <label for="image" class="block mb-1 text-sm font-medium text-gray-700">Product Image</label>
-        <input type="file" id="image" name="image"
-          class="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none">
-      </div>
+     <div class="row align-items-center" id="fileInputContainer" style="margin-top: 10px;">
+    <div class="col-sm-10">
+        <div id="additionalFilesContainer">
+            <input type="file" name="images[]" class="form-control mb-2" style="border: 1px solid #6c757d;" />
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <button id="addMoreButton" type="button" class="btn btn-secondary w-100 mb-2">
+            Add More
+        </button>
+    </div>
+</div>
+
+
+
+
+
 
       <button type="submit"
         class=" bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
@@ -54,5 +87,20 @@
  
     </form>
   </div>
+  <script>
+document.getElementById("addMoreButton").addEventListener("click", function () {
+    const container = document.getElementById("additionalFilesContainer");
+
+    const input = document.createElement("input");
+    input.type = "file";
+    input.name = "images[]";
+    input.className = "form-control mb-2";
+    input.style.border = "1px solid #6c757d";
+
+    container.appendChild(input);
+});
+</script>
+
+
 @endsection 
 

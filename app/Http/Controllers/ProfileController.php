@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Product;
+use App\Models\Order;
 
 class ProfileController extends Controller
 {
@@ -57,4 +59,17 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+   public function Search(Request $request)
+{
+    $query = $request->input('query');
+
+    // Search products by name
+    $products = Product::where('name', 'like', "%{$query}%")
+        ->orWhere('description', 'like', "%{$query}%")
+        ->get();
+
+    return view('admin.search-results', compact('query', 'products'));
+}
+
 }

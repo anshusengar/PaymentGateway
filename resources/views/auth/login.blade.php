@@ -43,12 +43,7 @@
             <p class="text-sm text-center text-gray-600 mt-4">Don't have an account?
                 <a href="{{ route('register') }}" class="text-indigo-500 hover:underline">Register</a>
             </p>
-            <div class="text-center mt-4">
-                <a href="https://wa.me/+11234567890?text=Hello" target="_blank" id="whatsapp-button">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"
-                        class="w-12 h-12 mx-auto" />
-                </a>
-            </div>
+           
         </div>
     </x-guest-layout>
 

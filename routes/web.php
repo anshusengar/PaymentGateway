@@ -13,7 +13,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RazorpayPaymentController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'home'])->name('home');
@@ -60,15 +61,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/checkout', [PaymentGatewayController::class, 'checkoutForm'])->name('checkout');
     Route::post('/create-checkout-session', [PaymentGatewayController::class, 'createCheckoutSession'])->name('create.checkout.session');
+Route::get('/admin/search', [ProfileController::class, 'search'])->name('admin.search');
 
 
     //product
     Route::get('/products', [ProductController::class, 'index'])->name('products');
     Route::get('/create-product', [ProductController::class, 'create'])->name('create.product');
    Route::post('/save-product', [ProductController::class, 'store'])->name('product.store');
+   Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+Route::post('/product/update/{id}', [ProductController::class, 'update'])->name('product.update');
    Route::delete('/delete-product/{id}', [ProductController::class, 'delete'])->name('product.delete');
-   
-   
+
+       Route::get('/categories', [ProductController::class, 'categories'])->name('categories');
+ Route::post('/save-category', [ProductController::class, 'savecat'])->name('save.category');
+Route::delete('/category/{id}', [ProductController::class, 'destroy'])->name('category.destroy');
 
 //order
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
@@ -76,6 +82,19 @@ Route::get('/create-order', [OrderController::class, 'create'])->name('create.or
 Route::post('/save-order', [OrderController::class, 'store'])->name('order.store');
 Route::delete('/delete-order/{id}', [OrderController::class, 'delete'])->name('order.delete');
 Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+Route::get('/pending-order', [OrderController::class, 'pendingOrder'])->name('orders.pending');
+Route::get('/delivered-order', [OrderController::class, 'deliveredOrder'])->name('orders.delivered');
+
+
+Route::get('/customers', [UserController::class, 'users'])->name('users');
+
+Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
+Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
+Route::delete('/coupons/{id}', [CouponController::class, 'destroy'])->name('coupons.destroy');
+Route::post('/coupons/assign-to-user', [CouponController::class, 'assignToUser'])->name('coupons.assignToUser');
+
+
+
 Route::get('/order-search', function() {
     $results = App\Models\Order::search(request('q'))->get();
     return response()->json($results);

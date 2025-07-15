@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
-
+use App\Services\CouponService;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -58,4 +59,25 @@ public function removeFromCart($id)
     return redirect()->route('cart.view')->with('success', 'Product removed!');
 }
 
+
+
+public function applyCoupon(Request $request, CouponService $couponService)
+{
+    $coupon = Coupon::where('code', $request->coupon_code)->firstOrFail();
+    $user = auth()->user();
+
+    $cartTotal = 1500; // replace with real cart value
+    $cartProducts = [
+        ['id' => 1],
+        ['id' => 5],
+    ];
+    $paymentMethod = $request->payment_method;
+
+    if (!$couponService->isCouponApplicable($user, $coupon, $cartTotal, $cartProducts, $paymentMethod)) {
+        return back()->withErrors(['coupon' => 'This coupon is not applicable to your cart.']);
+    }
+
+    // apply discount logic...
+    return back()->with('success', 'Coupon applied successfully!');
+}
 }

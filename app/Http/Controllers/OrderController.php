@@ -17,6 +17,23 @@ class OrderController extends Controller
     return view('orders.index', compact('orders'));
 }
 
+
+    public function deliveredOrder()
+{
+    $orders = Order::where('status','delivered')->get();
+    return view('orders.index', compact('orders'));
+}
+
+
+    public function pendingOrder()
+{
+    $orders = Order::where('status','pending')->get();
+    return view('orders.index', compact('orders'));
+}
+
+
+
+
     public function create(){
         $products=Product::all();
         return view('orders.create',compact('products'));

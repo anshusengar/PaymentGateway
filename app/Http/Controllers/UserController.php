@@ -17,4 +17,10 @@ class UserController extends Controller
 
     return 'Notifications sent to all users.';
 }
+
+
+public function users(){
+    $users=User::where('role','user')->get();
+    return view('user.index',compact('users'));
+}
 }
